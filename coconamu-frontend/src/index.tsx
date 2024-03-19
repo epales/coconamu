@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import Header from './Layout/Header';
+import Footer from './Layout/Footer';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 
@@ -12,6 +13,7 @@ root.render(
     <BrowserRouter>
       <Header/>
       <App />
+      <Footer/>
     </BrowserRouter>
   </React.StrictMode>
 );
