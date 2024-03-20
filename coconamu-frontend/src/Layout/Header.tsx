@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+import HeaderCSS from "../CSS/Header.css";
 function Header() {
+    const navigate = useNavigate();
     return (
         <div>
             <div>
@@ -10,10 +13,25 @@ function Header() {
             <div>
                 <input type="text" placeholder="검색어"></input>
             </div>
-            <div>
-
+            <div className= {HeaderCSS.HeaderRightdiv}>
+                <div>
+                    <button onClick={() => { navigate("/login"); }}>
+                        <p>로그인</p>
+                    </button>
+                </div>
+                <div>
+                    <button>
+                        <p>회원가입</p>
+                    </button>
+                </div>
+                <div>
+                    <button>
+                        <p>고객센터</p>
+                    </button>
+                </div>
+                {/* 로그인 / 회원가입 / 고객센터 */} 
             </div>
-            {/* 로그인 / 회원가입 / 고객센터 */} 
+            
         </div>
     );
 }
