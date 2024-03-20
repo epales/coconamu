@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import HeaderCSS from "../CSS/Header.css";
+import HeaderCSS from "../CSS/Header.module.css";
 function Header() {
     const navigate = useNavigate();
     return (
@@ -13,7 +13,7 @@ function Header() {
             <div>
                 <input type="text" placeholder="검색어"></input>
             </div>
-            <div className= {HeaderCSS.HeaderRightdiv}>
+            <div className= {HeaderCSS.headerRightdiv}>
                 <div>
                     <button onClick={() => { navigate("/login"); }}>
                         <p>로그인</p>

@@ -8,6 +8,7 @@ import lombok.Builder;
 
 @Builder
 @Entity
+
 public class UserProfile {
 
     @Id
