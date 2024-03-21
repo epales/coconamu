@@ -24,6 +24,7 @@ public class ApiController {
 
         System.out.println(user.getId());
         System.out.println(user.getPassword());
+        System.out.println(user.getEmail());
 
         userEntity.setId(user.getId());
         userEntity.setPassword(user.getPassword());
