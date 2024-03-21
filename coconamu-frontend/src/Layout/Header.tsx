@@ -15,17 +15,17 @@ function Header() {
             </div>
             <div className= {HeaderCSS.headerRightdiv}>
                 <div>
-                    <button onClick={() => { navigate("/login"); }}>
+                    <button className={HeaderCSS.rightMenuButton} onClick={() => { navigate("/login"); }}>
                         <p>로그인</p>
                     </button>
                 </div>
                 <div>
-                    <button>
+                    <button className={HeaderCSS.rightMenuButton} >
                         <p>회원가입</p>
                     </button>
                 </div>
                 <div>
-                    <button>
+                    <button className={HeaderCSS.rightMenuButton} >
                         <p>고객센터</p>
                     </button>
                 </div>

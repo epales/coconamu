@@ -1,6 +1,8 @@
 import './App.css';
 import {useEffect, useState} from "react";
 import axios from "axios";
+import Header from './Layout/Header';
+import Footer from './Layout/Footer';
 function App() {
     const [message, setMessage] = useState("");
 
@@ -16,13 +18,17 @@ function App() {
         })
   }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          A message from Spring Boot : <code>{message}</code>
-        </p>
-      </header>
-    </div>
+    <>
+      <Header/>
+      <div className="App">
+        <header className="App-header">
+          <p>
+            A message from Spring Boot : <code>{message}</code>
+          </p>
+        </header>
+      </div>
+      <Footer/>
+    </>
   );
 }
 

@@ -1,23 +1,27 @@
-package com.spring.react.coconamubackend.DTO;
+package com.spring.react.coconamubackend.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Entity
-
-public class UserProfile {
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int seq;
 
-    public String Id;
+    public String id;
 
-    public String Password;
+    public String password;
 
     public String email;
 
