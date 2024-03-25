@@ -1,5 +1,7 @@
 package com.spring.react.coconamubackend.Controller;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,9 +50,10 @@ public class ApiController {
     }
 
     @PostMapping("/email")
-    public String sendJoinMail(@RequestBody String email) {
+    public String sendJoinMail(@RequestBody Map<String, String> email) {
+        System.out.println(email.get("email"));
         EmailMessage emailMessage = EmailMessage.builder()
-                .toUser(email)
+                .toUser(email.get("email"))
                 .subject("[SAVIEW] 이메일 인증을 위한 인증 코드 발송")
                 .build();
 
