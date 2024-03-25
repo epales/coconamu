@@ -87,11 +87,12 @@ function Join() {
     }
 
     async function emailCheckHandler() { 
-        console.log(email);
         await axios({
                 method: "POST",
                 url: '/email',
-                data: {"email" : email},
+                data: {
+                    email : email,
+                },
                 headers: {'Content-type': 'application/json'}
             }).then((response) => {
                 setEmailConfirm(response);
