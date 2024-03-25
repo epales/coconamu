@@ -3,9 +3,12 @@ package com.spring.react.coconamubackend.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.react.coconamubackend.Entity.EmailMessage;
 import com.spring.react.coconamubackend.Entity.UserEntity;
+import com.spring.react.coconamubackend.Service.LoginService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,22 +16,46 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApiController {
 
+    private final LoginService loginService;
+
     @GetMapping("/api/hello")
     public String getGreeting() {
         return "Hello, Client!";
     }
 
     @PostMapping("/api/signUp")
-    public UserEntity signUp(@RequestBody UserEntity user) {
+    public void signUp(@RequestBody UserEntity user) {
         UserEntity userEntity = new UserEntity();
-
-        System.out.println(user.getId());
-        System.out.println(user.getPassword());
-        System.out.println(user.getEmail());
 
         userEntity.setId(user.getId());
         userEntity.setPassword(user.getPassword());
-        return userEntity;
+        userEntity.setEmail(user.getEmail());
+        userEntity.setGender(user.getGender());
+
+        loginService.join(userEntity);
     }
 
+    @GetMapping("/api/idCheck")
+    public boolean checkUser(@RequestParam(value = "id") String user) {
+
+        String message = loginService.findUser(user);
+
+        if (message == "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @PostMapping("/email")
+    public String sendJoinMail(@RequestBody String email) {
+        EmailMessage emailMessage = EmailMessage.builder()
+                .toUser(email)
+                .subject("[SAVIEW] 이메일 인증을 위한 인증 코드 발송")
+                .build();
+
+        String code = loginService.sendMail(emailMessage, "email");
+
+        return code;
+    }
 }

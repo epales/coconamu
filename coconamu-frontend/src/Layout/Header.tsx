@@ -10,17 +10,15 @@ function Header() {
             <div>
                 {/* 카테고리 */}    
             </div>
-            <div>
+            <div className={HeaderCSS.headerRightdiv}>
                 <input type="text" placeholder="검색어"></input>
-            </div>
-            <div className= {HeaderCSS.headerRightdiv}>
                 <div>
                     <button className={HeaderCSS.rightMenuButton} onClick={() => { navigate("/login"); }}>
                         <p>로그인</p>
                     </button>
                 </div>
                 <div>
-                    <button className={HeaderCSS.rightMenuButton} >
+                    <button className={HeaderCSS.rightMenuButton} onClick={() => { navigate("/join"); }} >
                         <p>회원가입</p>
                     </button>
                 </div>
