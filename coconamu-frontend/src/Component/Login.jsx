@@ -2,18 +2,25 @@ import { useNavigate } from "react-router";
 import LoginCSS from "../CSS/Login.module.css";
 function Login() {
     const navigate = useNavigate();
+
+    function login() {
+        
+        navigate("/");
+    }
     return (
+
+        
         <div className={`${LoginCSS.LoginBody} ${LoginCSS.wrapper}`}>
             <p>로그인 화면입니다.</p>
             <div>
                 <div className={LoginCSS.LoginSize}>
-                    <input type="text" className={LoginCSS.LoginInput} name = "id" placeholder="아이디" />
+                    <input type="text" className={LoginCSS.LoginInput} name = "id" placeholder="아이디" autoComplete="off" />
                 </div>
                 <div className={LoginCSS.LoginSize}>
-                    <input type="text" className={LoginCSS.LoginInput} name = "pw" placeholder="비밀번호" />
+                    <input type="text" className={LoginCSS.LoginInput} name = "pw" placeholder="비밀번호" autoComplete="off" />
                 </div>
                 <div className={LoginCSS.LoginSize}>
-                    <button type="button" className={LoginCSS.LoginButton} >로그인</button>
+                    <button type="button" className={LoginCSS.LoginButton} onClick={() => { login(); }} >로그인</button>
                 </div>
             </div>
             <div>

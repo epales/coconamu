@@ -1,9 +1,5 @@
-.signUpButton{
-    background-color: aqua;
-}
-
-.displayFlex{
-    display: flex;
+.logo{
+    cursor: pointer;
 }
 .joinBody {
     min-width: 290px;
@@ -11,36 +7,86 @@
     padding: 0 4.35%;
     text-align: center;
 }
-.joinSize {
-    width: 100%;
-    height: 60px;
-    margin-bottom: 20px;
+.joinBodyMain{
     border: 1px;
-    border-style: solid;
     border-color: black;
-    align-items: center;
-    text-align: center;
+    border-style: solid;
 }
-.joinInput {
-    width:  70%;
-    height: 80%;
-    margin: 0 auto;
-    padding: 6px 0px;
-    border: 0;
+.joinSize{
+    display: block;
+    position: relative;
+    height: 48px;
+    padding: 0;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    transition: border-color .25s ease;
 }
-
-.joinButton {
-    width: 100%;
+.joinSizeSpace{
+    margin-bottom: 2.9%;
+}
+.joinImgDiv{
+    position: relative;
+    float: left;
+    display: inline;
+    min-width: 44px;
+    _width: 44px;
     height: 100%;
-    margin: 0 auto;
-    border: 0;
-    background-color: skyblue;
+    border-right: 1px solid #ccc;
+    background-color: #fafafa;
+    cursor: pointer;
+}
+.joinInputDiv{
+    position: relative;
+    overflow: hidden;
+    display: block;
+    margin: 0;
+}
+.joinInput{
+    width: 100%;
+    padding: 16px 0 12px;
+    border: 0 none;
+    background: none transparent;
+    font-family: dotum,
+        sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #111;
+    font-weight: 700;
+    text-indent: 12px;
+}
+.joinImg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -8px 0 0 -10px;
+    padding-left: 1px;
+}
+.joinButton{
+    width: 100%;
+    padding: 16px 0 12px;
+    border: 0 none;
+    background: none transparent;
+    font-family: dotum,
+        sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #111;
+    font-weight: 700;
+    cursor: pointer;
+}             
+.joinGender{
+    display: flex;
+    margin-bottom: 2.9%;
+    
 }
 .wrapper {
     width: auto;
     margin: 0 auto;
 }
-.joinImgSize{
-    width: 30px;
-    height: 30px;
+.borderLine{
+    border: 1px;
+    border-color: black;
+    border-style: solid;
 }

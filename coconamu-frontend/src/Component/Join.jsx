@@ -1,11 +1,11 @@
 
 import axios from "axios";
-import { useState } from "react";
+import { useState , useRef } from "react";
 import { useNavigate } from "react-router";
-import JoinCSS from "../CSS/Join.module.css"
-import logo from "../Img/icons8-우편-48.png";
+import JoinCSS from "../CSS/Join.module.css";
 import lock from '../Img/icons8-lock-32.png';
-import del from '../Img/icons8-엑스-24.png';
+import logo from "../Img/icons8-우편-48.png";
+import coconamulogo from "../Img/icons8-coconamu.png";
 function Join() {
     const [id, setId] = useState("");
 
@@ -29,6 +29,24 @@ function Join() {
     const [genderSign, setGenderSign] = useState(false);
     
     const navigate = useNavigate();
+    const inputIdRef = useRef();
+    const inputPwRef = useRef(); 
+    const inputConfirmRef = useRef(); 
+    const inputEmailRef = useRef(); 
+
+    const idClickHandler=() => {
+        inputIdRef.current.focus();
+    }
+    const pwClickHandler=() => {
+        inputPwRef.current.focus();
+    }
+    const confirmClickHandler=() => {
+        inputConfirmRef.current.focus();
+    }
+    const emailClickHandler=() => {
+        inputEmailRef.current.focus();
+    }
+
 
     // 가입 클릭 이벤트
     async function HandleClick() {
@@ -102,21 +120,25 @@ function Join() {
 
     // 이메일 인증코드 발송
     async function emailCheckHandler() {
-        setEmailSendCheck(true);
-        alert("인증코드 발송! 이메일 확인 후 인증 해주세요~" );
-        await axios({
-            method: "POST",
-            url: '/email',
-            data: {
-                email : email,
-            },
-            headers: {'Content-type': 'application/json'}
-        }).then((response) => {
-            console.log(response.data);
-            setEmailVerifyCode(response.data);
-            }).catch((error)=>{
+        if (email !== "") {
+            setEmailSendCheck(true);
+            alert("인증코드 발송! 이메일 확인 후 인증 해주세요~");
+            await axios({
+                method: "POST",
+                url: '/email',
+                data: {
+                    email: email,
+                },
+                headers: { 'Content-type': 'application/json' }
+            }).then((response) => {
+                console.log(response.data);
+                setEmailVerifyCode(response.data);
+            }).catch((error) => {
                 console.log(error);
             })
+        } else {
+            alert("이메일을 입력해주세요!");
+        }
     }
     // 이메일 체크
     const emailChange = (e) => {
@@ -179,46 +201,92 @@ function Join() {
         <>
             <div className={`${JoinCSS.joinBody} ${JoinCSS.wrapper}`}>
                 <div>
-                    <img src={logo} alt="logo"/>
+                    <img src={coconamulogo} alt="logo" className={JoinCSS.logo } onClick={()=> {navigate("/")}}/>
                 </div>
-                <div className={`${JoinCSS.joinSize} ${JoinCSS.displayFlex}`}>
-                    <img src={logo} alt="logo" className={JoinCSS.joinImgSize} />
-                    <input type="text" className={JoinCSS.joinInput} placeholder="아이디" name="id" value={id} onInput={idChange} autoComplete="off" />
-                    <img src={del} alt="logo" className={JoinCSS.joinImgSize} />
-                    {idError}
-                </div>
-                <div className={`${JoinCSS.joinSize} ${JoinCSS.displayFlex}`}>
-                    <img src={lock} alt="logo" className={JoinCSS.joinImgSize} />
-                    <input type="password" className={JoinCSS.joinInput} placeholder="비밀번호" name="password" value={password} onChange={passwordChangeHandler} autoComplete="off" />
-                    <img src={del} alt="logo" className={JoinCSS.joinImgSize} />
-                    {passwordError}
-                </div>
-                <div className={`${JoinCSS.joinSize} ${JoinCSS.displayFlex}`}>
-                    <img src={lock} alt="logo" className={JoinCSS.joinImgSize} />
-                    <input type="password" className={JoinCSS.joinInput} placeholder="비밀번호 확인" name="passwordConfirm" value={passwordConfirm} onChange={passwordChangeHandler} autoComplete="off"/>
-                    <img src={del} alt="logo" className={JoinCSS.joinImgSize} />
-                    {passwordConfirmError}
-                </div>
-                <div className={`${JoinCSS.joinSize} ${JoinCSS.displayFlex}`}>
-                    <input type="text" className={JoinCSS.joinInput} placeholder="이메일" name="email" value={email} onChange={emailChange} autoComplete="off" />
-                    <button onClick={emailCheckHandler}>인증번호 발송</button>
-                </div>
-                    {
-                    emailSendCheck === true ?
-                        <div>
-                            <input type="text" placeholder="인증 코드 입력" name="emailConfirm" onChange={emailConfirmChange}/>
-                            <button name="confirm" onClick={verifyEmailCode}>인증</button>
+                <div className={JoinCSS.joinBodyMain}>
+                    <div className={`${JoinCSS.joinSize} ${JoinCSS.joinSizeSpace}`}>
+                        <div className={`${JoinCSS.joinImgDiv} ${JoinCSS.displayFlex}`} onClick={idClickHandler}>
+                            <img src={logo} alt="logo" className={JoinCSS.joinImg} />
                         </div>
-                        :
-                        null
-                    }
-                <div className={JoinCSS.displayFlex}>
-                    <input type="radio" name="gender" value={"남성"} onChange={genderChange}/><p>남자</p>
-                    <input type="radio" name="gender" value={"여성"} onChange={genderChange}/><p>여자</p>
-                </div>
-                <div>
-                <button className={JoinCSS.signUpButton}  onClick={() => { HandleClick() }}>버튼</button>
-                </div>
+                        <div className={JoinCSS.joinInputDiv}>
+                            <input type="text" className={JoinCSS.joinInput} placeholder="아이디" name="id" ref={inputIdRef} value={id} onInput={idChange} autoComplete="off" />
+                        </div>
+                        {
+                            id !== "" ?
+                                
+                                <div>{ idError }</div>
+                                :
+                                null
+                        }
+                        
+                    </div>
+                    <div className={`${JoinCSS.joinSize} ${JoinCSS.joinSizeSpace}`}>
+                        <div className={`${JoinCSS.joinImgDiv} ${JoinCSS.displayFlex}`} onClick={pwClickHandler}>
+                            <img src={lock} alt="logo" className={JoinCSS.joinImg} />
+                        </div>
+                        <div className={JoinCSS.joinInputDiv}>
+                            <input type="password" className={JoinCSS.joinInput} placeholder="비밀번호" name="password" ref={inputPwRef} value={password} onChange={passwordChangeHandler} autoComplete="off" />
+                        </div>
+                        {
+                            password !== "" ?
+                                <div>{ passwordError }</div>
+                                :
+                                null
+                        }
+                    </div>
+                    <div className={`${JoinCSS.joinSize} ${JoinCSS.joinSizeSpace}`}>
+                        <div className={`${JoinCSS.joinImgDiv} ${JoinCSS.displayFlex}`} onClick={confirmClickHandler}>
+                            <img src={lock} alt="logo" className={JoinCSS.joinImg} />
+                        </div>
+                        <div className={JoinCSS.joinInputDiv}>
+                            <input type="password" className={JoinCSS.joinInput} placeholder="비밀번호 확인" name="passwordConfirm" ref={inputConfirmRef}value={passwordConfirm} onChange={passwordChangeHandler} autoComplete="off"/>
+                        </div>
+                        {
+                            passwordConfirm !== "" ?
+                                <div>{ passwordConfirmError }</div>
+                                :
+                                null
+                        }
+                    </div>
+                    <div className={JoinCSS.joinSize}>
+                        <div className={`${JoinCSS.joinImgDiv} ${JoinCSS.joinInputDiv}`} onClick={emailClickHandler}>
+                           <img src={logo} alt="logo" className={JoinCSS.joinImg} /> 
+                        </div>
+                        <div className={JoinCSS.joinInputDiv}>
+                            <input type="text" className={JoinCSS.joinInput} placeholder="이메일" name="email" ref={inputEmailRef} value={email} onChange={emailChange} autoComplete="off" />
+                        </div>
+                           
+                    </div>
+                    <div className={JoinCSS.joinSize}>
+                        <div className={JoinCSS.joinInputDiv}>
+                            <button className={JoinCSS.joinButton} onClick={emailCheckHandler}>인증번호 발송</button>
+                        </div> 
+                    </div>
+                        {
+                        emailSendCheck === true ?
+                            <> 
+                                <div className={JoinCSS.joinSize}>
+                                    <div className={JoinCSS.joinInputDiv}>
+                                        <input type="text" className={JoinCSS.joinInput} placeholder="인증 코드 입력" name="emailConfirm" onChange={emailConfirmChange} autoComplete="off"/>
+                                    </div>
+                                </div>
+                                <div className={`${JoinCSS.joinSize} ${JoinCSS.joinSizeSpace}`}>
+                                    <div className={JoinCSS.joinInputDiv}>
+                                        <button name="confirm" className={JoinCSS.joinButton} onClick={verifyEmailCode}>인증</button>
+                                    </div>
+                                </div>
+                            </>
+                            :
+                            null
+                        }
+                    <div className={JoinCSS.joinGender}>
+                        <input type="button" className={`${JoinCSS.joinButton} ${JoinCSS.borderLine} `}name="gender" value={"남성"} onClick={genderChange}/>
+                        <input type="button" className={`${JoinCSS.joinButton} ${JoinCSS.borderLine} `} name="gender" value={"여성"} onClick={genderChange}/>
+                    </div>
+                    <div>
+                    <button className={`${JoinCSS.joinButton} ${JoinCSS.borderLine} `}  onClick={() => { HandleClick() }}>버튼</button>
+                    </div>
+                    </div>
             </div>
         </>
     );
