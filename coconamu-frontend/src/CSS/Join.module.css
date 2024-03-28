@@ -5,3 +5,42 @@
 .displayFlex{
     display: flex;
 }
+.joinBody {
+    min-width: 290px;
+    max-width: 460px;
+    padding: 0 4.35%;
+    text-align: center;
+}
+.joinSize {
+    width: 100%;
+    height: 60px;
+    margin-bottom: 20px;
+    border: 1px;
+    border-style: solid;
+    border-color: black;
+    align-items: center;
+    text-align: center;
+}
+.joinInput {
+    width:  70%;
+    height: 80%;
+    margin: 0 auto;
+    padding: 6px 0px;
+    border: 0;
+}
+
+.joinButton {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    border: 0;
+    background-color: skyblue;
+}
+.wrapper {
+    width: auto;
+    margin: 0 auto;
+}
+.joinImgSize{
+    width: 30px;
+    height: 30px;
+}

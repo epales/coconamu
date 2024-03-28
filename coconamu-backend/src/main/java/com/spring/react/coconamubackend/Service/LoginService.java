@@ -29,7 +29,9 @@ public class LoginService {
     public void join(UserEntity user) {
 
         if (user != null) {
-            userRepository.save(user);
+            if (userRepository.findById(user.getId()).isEmpty()) {
+                userRepository.save(user);
+            }
         }
     }
 

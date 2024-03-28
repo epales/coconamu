@@ -3,27 +3,36 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import JoinCSS from "../CSS/Join.module.css"
+import logo from "../Img/icons8-우편-48.png";
+import lock from '../Img/icons8-lock-32.png';
+import del from '../Img/icons8-엑스-24.png';
 function Join() {
     const [id, setId] = useState("");
+
     const [password, setPassword] = useState("");
-    const [confirm, setConfirm] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
+
     const [email, setEmail] = useState("");
     const [emailConfirm, setEmailConfirm] = useState("");
+    const [emailVerifyCode, setEmailVerifyCode] = useState("");
+
     const [gender, setGender] = useState("");
     
     const [idError, setIdError] = useState("");
     const [passwordError, setPasswordError] = useState("");
-    const [confirmError, setConfirmError] = useState("");
+    const [passwordConfirmError, setPasswordConfirmError] = useState("");
     
     const [idSign, setIdSign] = useState(false);
     const [pwSign, setPwSign] = useState(false);
     const [emailSign, setEmailSign] = useState(false);
+    const [emailSendCheck, setEmailSendCheck] = useState(false);
     const [genderSign, setGenderSign] = useState(false);
     
     const navigate = useNavigate();
 
     // 가입 클릭 이벤트
     async function HandleClick() {
+        // 가입 제약
         if (!idSign) {
             alert("아이디를 확인 해주세요.");
             return false;
@@ -31,13 +40,14 @@ function Join() {
             alert("비밀번호를 확인 해주세요.");
             return false;
         } else if (!emailSign) {
-            alert("이메일을 확인 해주세요.");
+            alert("이메일 인증을 완료 해주세요.");
             return false;
         } else if (!genderSign) {
-            alert("성별체크를 확인 해주세요.");
+            alert("성별 체크를 확인 해주세요.");
             return false;
         } 
 
+        // 가입 버튼 Axios
         if (idSign) {
             await axios({
                 method: "POST",
@@ -61,7 +71,7 @@ function Join() {
     };
 
     // 아이디 중복 체크 및 입력 체크
-    async function idCheckHandler() {
+    async function idCheckHandler(id) {
         await axios({
             method: "GET",
             url: '/api/idCheck',
@@ -69,33 +79,41 @@ function Join() {
                 id: id
             }
         }).then((response) =>{
-            if (response) {
+            if (response.data) {
                 setIdSign(true);
+                setIdError("");
             } else {
+                setIdSign(false);
                 setIdError("중복된 아이디입니다.");
             }
         }).catch((error)=>{
             console.log(error);
         })
     }
+    // 아이디 입력
     const idChange = (e) => {
         if (id === "") {
             setIdSign(false);
         }
         setId(e.target.value);
-        idCheckHandler();
+        idCheckHandler(e.target.value);
+        
     }
 
-    async function emailCheckHandler() { 
+    // 이메일 인증코드 발송
+    async function emailCheckHandler() {
+        setEmailSendCheck(true);
+        alert("인증코드 발송! 이메일 확인 후 인증 해주세요~" );
         await axios({
-                method: "POST",
-                url: '/email',
-                data: {
-                    email : email,
-                },
-                headers: {'Content-type': 'application/json'}
-            }).then((response) => {
-                setEmailConfirm(response);
+            method: "POST",
+            url: '/email',
+            data: {
+                email : email,
+            },
+            headers: {'Content-type': 'application/json'}
+        }).then((response) => {
+            console.log(response.data);
+            setEmailVerifyCode(response.data);
             }).catch((error)=>{
                 console.log(error);
             })
@@ -103,7 +121,19 @@ function Join() {
     // 이메일 체크
     const emailChange = (e) => {
         setEmail(e.target.value);
-        setEmailSign(true);
+    }
+    // 이메일 인증코드 입력
+    const emailConfirmChange = (e) => {
+        setEmailConfirm(e.target.value);
+    }
+    // 발송된 인증코드와 입력한 인증코드 대조
+    const verifyEmailCode = () => {
+        if (emailConfirm === emailVerifyCode) {
+            setEmailSign(true);
+            alert("이메일 인증 완료!");
+        } else {
+            alert("코드가 달라요! 현재 인증 코드는 :" + emailVerifyCode);
+        }
     }
     // 성별 체크
     const genderChange = (e) => {
@@ -116,13 +146,13 @@ function Join() {
 
         if (name === 'password') {
             setPassword(value);
-            passwordCheck(value, confirm);
+            passwordCheck(value, passwordConfirm);
         } else {
-            setConfirm(e.target.value);
+            setPasswordConfirm(e.target.value);
             passwordCheck(password, value)
         }
     }
-    const passwordCheck = (password, confirm) => {
+    const passwordCheck = (password, passwordConfirm) => {
         const passwordRegex = /^[a-z\d!@*&-_]{8,16}$/;
         if (password === '') {
             setPwSign(false);
@@ -132,42 +162,52 @@ function Join() {
             setPwSign(false);
             setPasswordError('비밀번호는 8~16 글자의 영소문자, 숫자, !@*&-_만 입력 가능합니다.');
             return false;
-        } else if (password !== confirm) {
+        } else if (password !== passwordConfirm) {
             setPasswordError('');
             setPwSign(false);
-            setConfirmError('비밀번호가 일치하지 않습니다.');
+            setPasswordConfirmError('비밀번호가 일치하지 않습니다.');
             return false;
         } else {
             setPwSign(true);
             setPasswordError('');
-            setConfirmError('');
+            setPasswordConfirmError('');
             return true;
          }
     }
 
     return (
         <>
-            <div>
+            <div className={`${JoinCSS.joinBody} ${JoinCSS.wrapper}`}>
                 <div>
-                    <input type="text" placeholder="아이디" name="id" value={id} onChange={idChange} autoComplete="off"/>
+                    <img src={logo} alt="logo"/>
+                </div>
+                <div className={`${JoinCSS.joinSize} ${JoinCSS.displayFlex}`}>
+                    <img src={logo} alt="logo" className={JoinCSS.joinImgSize} />
+                    <input type="text" className={JoinCSS.joinInput} placeholder="아이디" name="id" value={id} onInput={idChange} autoComplete="off" />
+                    <img src={del} alt="logo" className={JoinCSS.joinImgSize} />
                     {idError}
                 </div>
-                <div>
-                    <input type="password" placeholder="비밀번호" name="password" value={password} onChange={passwordChangeHandler} autoComplete="off"/>
+                <div className={`${JoinCSS.joinSize} ${JoinCSS.displayFlex}`}>
+                    <img src={lock} alt="logo" className={JoinCSS.joinImgSize} />
+                    <input type="password" className={JoinCSS.joinInput} placeholder="비밀번호" name="password" value={password} onChange={passwordChangeHandler} autoComplete="off" />
+                    <img src={del} alt="logo" className={JoinCSS.joinImgSize} />
                     {passwordError}
                 </div>
-                <div>
-                    <input type="password" placeholder="비밀번호 확인" name="confirm" value={confirm} onChange={passwordChangeHandler} autoComplete="off"/>
-                    {confirmError}
+                <div className={`${JoinCSS.joinSize} ${JoinCSS.displayFlex}`}>
+                    <img src={lock} alt="logo" className={JoinCSS.joinImgSize} />
+                    <input type="password" className={JoinCSS.joinInput} placeholder="비밀번호 확인" name="passwordConfirm" value={passwordConfirm} onChange={passwordChangeHandler} autoComplete="off"/>
+                    <img src={del} alt="logo" className={JoinCSS.joinImgSize} />
+                    {passwordConfirmError}
                 </div>
-                <div className={JoinCSS.displayFlex}>
-                    <input type="text" placeholder="이메일" name="email" value={email} onChange={emailChange} autoComplete="off" />
+                <div className={`${JoinCSS.joinSize} ${JoinCSS.displayFlex}`}>
+                    <input type="text" className={JoinCSS.joinInput} placeholder="이메일" name="email" value={email} onChange={emailChange} autoComplete="off" />
                     <button onClick={emailCheckHandler}>인증번호 발송</button>
                 </div>
                     {
-                    email !== "" ?
+                    emailSendCheck === true ?
                         <div>
-                            <input type="text" placeholder="인증 코드 입력" name="emailConfirm" />
+                            <input type="text" placeholder="인증 코드 입력" name="emailConfirm" onChange={emailConfirmChange}/>
+                            <button name="confirm" onClick={verifyEmailCode}>인증</button>
                         </div>
                         :
                         null
@@ -177,7 +217,7 @@ function Join() {
                     <input type="radio" name="gender" value={"여성"} onChange={genderChange}/><p>여자</p>
                 </div>
                 <div>
-                    <button className={JoinCSS.signUpButton} type="button" onClick={() => { HandleClick() }}>버튼</button>
+                <button className={JoinCSS.signUpButton}  onClick={() => { HandleClick() }}>버튼</button>
                 </div>
             </div>
         </>
