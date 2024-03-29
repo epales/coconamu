@@ -1,38 +1,96 @@
+.logo {
+    cursor: pointer;
+}
+
 .LoginBody{
     min-width: 290px;
     max-width: 460px;
     padding: 0 4.35%;
+    text-align: center;
 }
 
 .LoginSize{
-    width: 320px;
-    height: 60px;
-    margin-bottom: 20px;
+    display: block;
+    position: relative;
+    height: 48px;
+    padding: 0;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    transition: border-color .25s ease;
+}
+
+.LoginBodyMain {
     border: 1px;
-    border-style: solid;
     border-color: black;
+    border-style: solid;
 }
-
-.LoginInput{
-    width: 80%;
-    height: 80%;
-    margin: 0 auto;
-    padding: 6px 0px;
-    border: 0;
+.LoginSizeSpace {
+    margin-bottom: 2.9%;
 }
-.LoginButton{
-    width: 100%;
+.LoginImgDiv {
+    position: relative;
+    float: left;
+    display: inline;
+    min-width: 44px;
+    _width: 44px;
     height: 100%;
-    margin: 0 auto;
-    border: 0;
-    background-color: skyblue;
+    border-right: 1px solid #ccc;
+    background-color: #fafafa;
+    cursor: pointer;
+    
 }
-
+.LoginImg {
+    float: right;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -8px 0 0 -10px;
+    padding-left: 1px;
+}
+.LoginDelImg {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -8px 0 0 -30px;
+    padding-left: 1px;
+}
+.LoginInputDiv {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    margin: 0;
+}
+.LoginInput {
+    width: 100%;
+    padding: 16px 0 12px;
+    border: 0 none;
+    background: none transparent;
+    font-family: dotum,
+        sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #111;
+    font-weight: 700;
+    text-indent: 12px;
+}
+.LoginButton {
+    width: 100%;
+    padding: 16px 0 12px;
+    border: 0 none;
+    background: none transparent;
+    font-family: dotum,
+        sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #111;
+    font-weight: 700;
+    cursor: pointer;
+}
 .wrapper{
     width: auto;
     margin: 0 auto;
-}
-
-input {
-    vertical-align: middle
 }

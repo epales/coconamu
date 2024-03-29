@@ -28,6 +28,7 @@ function Join() {
     const [emailSendCheck, setEmailSendCheck] = useState(false);
     const [genderSign, setGenderSign] = useState(false);
     
+
     const navigate = useNavigate();
     const inputIdRef = useRef();
     const inputPwRef = useRef(); 
@@ -201,11 +202,11 @@ function Join() {
         <>
             <div className={`${JoinCSS.joinBody} ${JoinCSS.wrapper}`}>
                 <div>
-                    <img src={coconamulogo} alt="logo" className={JoinCSS.logo } onClick={()=> {navigate("/")}}/>
+                    <img src={coconamulogo} alt="logo" className={JoinCSS.logo} onClick={()=> {navigate("/")}}/>
                 </div>
                 <div className={JoinCSS.joinBodyMain}>
                     <div className={`${JoinCSS.joinSize} ${JoinCSS.joinSizeSpace}`}>
-                        <div className={`${JoinCSS.joinImgDiv} ${JoinCSS.displayFlex}`} onClick={idClickHandler}>
+                        <div className={JoinCSS.joinImgDiv} onClick={idClickHandler}>
                             <img src={logo} alt="logo" className={JoinCSS.joinImg} />
                         </div>
                         <div className={JoinCSS.joinInputDiv}>
@@ -218,10 +219,9 @@ function Join() {
                                 :
                                 null
                         }
-                        
                     </div>
                     <div className={`${JoinCSS.joinSize} ${JoinCSS.joinSizeSpace}`}>
-                        <div className={`${JoinCSS.joinImgDiv} ${JoinCSS.displayFlex}`} onClick={pwClickHandler}>
+                        <div className={JoinCSS.joinImgDiv} onClick={pwClickHandler}>
                             <img src={lock} alt="logo" className={JoinCSS.joinImg} />
                         </div>
                         <div className={JoinCSS.joinInputDiv}>
@@ -235,7 +235,7 @@ function Join() {
                         }
                     </div>
                     <div className={`${JoinCSS.joinSize} ${JoinCSS.joinSizeSpace}`}>
-                        <div className={`${JoinCSS.joinImgDiv} ${JoinCSS.displayFlex}`} onClick={confirmClickHandler}>
+                        <div className={JoinCSS.joinImgDiv} onClick={confirmClickHandler}>
                             <img src={lock} alt="logo" className={JoinCSS.joinImg} />
                         </div>
                         <div className={JoinCSS.joinInputDiv}>
@@ -249,7 +249,7 @@ function Join() {
                         }
                     </div>
                     <div className={JoinCSS.joinSize}>
-                        <div className={`${JoinCSS.joinImgDiv} ${JoinCSS.joinInputDiv}`} onClick={emailClickHandler}>
+                        <div className={JoinCSS.joinImgDiv} onClick={emailClickHandler}>
                            <img src={logo} alt="logo" className={JoinCSS.joinImg} /> 
                         </div>
                         <div className={JoinCSS.joinInputDiv}>
@@ -280,8 +280,8 @@ function Join() {
                             null
                         }
                     <div className={JoinCSS.joinGender}>
-                        <input type="button" className={`${JoinCSS.joinButton} ${JoinCSS.borderLine} `}name="gender" value={"남성"} onClick={genderChange}/>
-                        <input type="button" className={`${JoinCSS.joinButton} ${JoinCSS.borderLine} `} name="gender" value={"여성"} onClick={genderChange}/>
+                        <input type="button" className={`${JoinCSS.joinButton} ${JoinCSS.borderLine} ${gender === "남성" ? JoinCSS.joinGenderMan : "" }`} name="gender" value={"남성"} onClick={genderChange}/>
+                        <input type="button" className={`${JoinCSS.joinButton} ${JoinCSS.borderLine} ${gender === "여성" ? JoinCSS.joinGenderWoman : "" }`} name="gender" value={"여성"} onClick={genderChange}/>
                     </div>
                     <div>
                     <button className={`${JoinCSS.joinButton} ${JoinCSS.borderLine} `}  onClick={() => { HandleClick() }}>버튼</button>
