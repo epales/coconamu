@@ -6,7 +6,7 @@
 - import 변수명 from css파일경로; 추가 시 파일 확장자 명을 css 파일 확장자명을 .module.css 로 해야만 인식한다.
 - tsx에 if문은 삼항연산자로 사용한다.
 - SpringBoot에는 STMP 로 이메일 인증코드를 보낼 수 있다.
--- React + Spring 에서는 Session 사용이 어렵다.
+- React + Spring 에서는 서버가 따로 존재하기 때문에 세션 정보를 저장하기 위해 JWT 토큰을 사용하여 서로 값을 저장해두고 비교하여 활용한다.
 
 Frontend
 - React
