@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import LoginCSS from "../CSS/Login.module.css";
 import delImg from "../Img/icons8-cancel-48.png"
 import IdImg from "../Img/icons8-우편-48.png" 
@@ -11,6 +11,8 @@ function Login() {
 
     const [isId, setId] = useState("");
     const [isPw, setPw] = useState("");
+    const inputIdRef = useRef();
+    const inputPwRef = useRef(); 
 
     function login() {
         navigate("/");
@@ -21,6 +23,20 @@ function Login() {
     const pwChangeHandler = (e) => {
         setPw(e.target.value)
     }
+    const idClear = () => {
+        setId("");
+        inputIdRef.current.focus();
+    }
+    const pwClear = () => {
+        setPw("");
+        inputPwRef.current.focus();
+    }
+    const idClickHandler=() => {
+        inputIdRef.current.focus();
+    }
+    const pwClickHandler=() => {
+        inputPwRef.current.focus();
+    }
     return (
         <div className={`${LoginCSS.LoginBody} ${LoginCSS.wrapper}`}>
             <div>
@@ -28,21 +44,34 @@ function Login() {
             </div>
             <div className={LoginCSS.LoginBodyMain}>
                 <div className={`${LoginCSS.LoginSize} ${LoginCSS.LoginSizeSpace}`}>
-                    <div className={LoginCSS.LoginImgDiv}>
+                    <div className={LoginCSS.LoginImgDiv} onClick={idClickHandler}> 
                         <img src={IdImg} alt="id" className={LoginCSS.LoginImg}/>
                     </div>
                     <div className={LoginCSS.LoginInputDiv}>
-                        <input type="text" className={LoginCSS.LoginInput} name="id" value={isId} onChange={idChangeHandler} placeholder="아이디" autoComplete="off" />
-                        <img src={delImg} alt="delete" className={LoginCSS.LoginDelImg}/>
+                        <input type="text" className={LoginCSS.LoginInput} name="id" ref={inputIdRef} value={isId} onChange={idChangeHandler} placeholder="아이디" autoComplete="off" />
+                        {
+                            isId !== ""
+                            ?
+                                <img src={delImg} alt="delete" className={LoginCSS.LoginDelImg} onClick={idClear}/>
+                                :
+                                null
+                        }
+                        
                     </div>
                 </div>
                 <div className={`${LoginCSS.LoginSize} ${LoginCSS.LoginSizeSpace}`}>
-                    <div className={LoginCSS.LoginImgDiv}>
+                    <div className={LoginCSS.LoginImgDiv} onClick={pwClickHandler}>
                         <img src={PwImg} alt="pw" className={LoginCSS.LoginImg}/>
                     </div>
                     <div className={LoginCSS.LoginInputDiv}>
-                        <input type="text" className={LoginCSS.LoginInput} name="pw" value={isPw} onChange={pwChangeHandler} placeholder="비밀번호" autoComplete="off" />
-                        <img src={delImg} alt="delete" className={LoginCSS.LoginDelImg}/>
+                        <input type="text" className={LoginCSS.LoginInput} name="pw" ref={inputPwRef} value={isPw} onChange={pwChangeHandler} placeholder="비밀번호" autoComplete="off" />
+                        {
+                            isPw !== ""
+                                ?
+                                <img src={delImg} alt="delete" className={LoginCSS.LoginDelImg} onClick={pwClear}/>
+                                :
+                                null
+                        }
                     </div>
                 </div>
                 <div className={LoginCSS.LoginSize}>
