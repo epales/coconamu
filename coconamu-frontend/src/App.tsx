@@ -1,5 +1,6 @@
 import './App.css';
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { getCookie, removeCookie } from './Util/Cookie';
 import axios from "axios";
 import Header from './Layout/Header';
 import Footer from './Layout/Footer';
@@ -16,7 +17,10 @@ function App() {
         .catch((error) => {
           console.log(error);
         })
+    const cookie = getCookie("accessToken");
+    console.log(cookie);
   }, []);
+  
   return (
     <>
       <Header/>

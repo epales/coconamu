@@ -1,21 +1,38 @@
 import { useNavigate } from "react-router";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import LoginCSS from "../CSS/Login.module.css";
 import delImg from "../Img/icons8-cancel-48.png"
 import IdImg from "../Img/icons8-우편-48.png" 
 import PwImg from "../Img/icons8-자물쇠-48.png"
 import coconamulogo from "../Img/icons8-coconamu.png";
+import {setCookie} from "../Util/Cookie";
+import axios from "axios";
 
 function Login() {
     const navigate = useNavigate();
-
     const [isId, setId] = useState("");
     const [isPw, setPw] = useState("");
     const inputIdRef = useRef();
     const inputPwRef = useRef(); 
-
-    function login() {
-        navigate("/");
+    
+    async function login() {
+        await axios({
+                method: "POST",
+                url: '/sign-in',
+                data: {
+                    username: isId,
+                    password: isPw
+                },
+                headers: { 'Content-type': 'application/json' }
+            }).then((response) => {
+                console.log(response.data);
+                setCookie("accessToken",response.data.accessToken);
+                navigate("/");
+            }).catch((error) => {
+                console.log(error);
+                alert("로그인 실패! 아이디 혹은 비밀번호를 확인해 주세요.");
+            })
+        
     }
     const idChangeHandler = (e) => {
         setId(e.target.value)
@@ -64,7 +81,7 @@ function Login() {
                         <img src={PwImg} alt="pw" className={LoginCSS.LoginImg}/>
                     </div>
                     <div className={LoginCSS.LoginInputDiv}>
-                        <input type="text" className={LoginCSS.LoginInput} name="pw" ref={inputPwRef} value={isPw} onChange={pwChangeHandler} placeholder="비밀번호" autoComplete="off" />
+                        <input type="password" className={LoginCSS.LoginInput} name="pw" ref={inputPwRef} value={isPw} onChange={pwChangeHandler} placeholder="비밀번호" autoComplete="off" />
                         {
                             isPw !== ""
                                 ?
